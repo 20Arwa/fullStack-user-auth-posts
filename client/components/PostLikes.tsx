@@ -29,7 +29,7 @@ const PostLikes = (props: PostLikesTypes) => {
         const [numLikes, setnumLikes] = useState<number>(props.likes.length)
 
         // Check If Post Alredy Liked
-        useEffect(() => {props.likes.includes(props.currentUserId || "") ? setLiked(true) : setLiked(false)}, [])
+        useEffect(() => {props.likes.includes(props.currentUserId || "") ? setLiked(true) : setLiked(false)}, [props.currentUserId, props.likes])
         // Handle Like
         const handleLike = async() => {
             if (!token) {
@@ -41,8 +41,8 @@ const PostLikes = (props: PostLikesTypes) => {
                         `posts/${props.postId}/like`,
                         {userId: props.currentUserId, like: !liked}
                     )
+                    setnumLikes(prev => liked ? prev - 1 : prev + 1)
                     setLiked(!liked)
-                    setnumLikes(prev => liked ? prev-1  : prev+1)
                 } catch(err: any ) {
                     toast.error(err.response?.data?.message)
                 }            
