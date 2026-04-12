@@ -8,30 +8,26 @@ import Post from "@/components/Post"
 import PostForm from "@/components/PostForm"
 import { useRouter } from "next/navigation"
 
+
 const Profile = () => {
   const [posts, setPosts] = useState([])
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const router = useRouter()
 
-  if (user === undefined) {
-    return <p>Loading...</p>
-  }
-
-  if (user === null) {
-    router.push("/login")
-    return null
-  }
-
-  // Get User's Posts
   useEffect(() => {
-    if (!user?.user?.id) return
-    fetchPosts()
-  }, [user])
+    if (!loading && !user) {
+      router.replace("/login")
+    }
+  }, [loading, user])
+
+  if (loading) return <p>Loading...</p>
+  if (!user) return null
+
   
   
   const fetchPosts = async () => {
     try {
-      const res = await api.get(`/posts/${user.user.id}`)      
+      const res = await api.get(`/posts/${user.id}`)      
       setPosts(res.data.posts)
     } catch(err: any) {
       toast.error(err?.response?.data?.message)
@@ -43,10 +39,10 @@ const Profile = () => {
       <div className="flex items-center">
         <CircleUserRound size={50}></CircleUserRound>
         <div className="ms-1">
-          <h1 className="text-xl">{user?.user?.user_name}</h1>
+          <h1 className="text-xl">{user?.user_name}</h1>
           <div className="flex items-center gap-x-0.5">
             <Mail size={20}></Mail>
-            <p>{user?.user?.email}</p>
+            <p>{user?.email}</p>
           </div>
         </div>
       </div>
@@ -60,7 +56,7 @@ const Profile = () => {
               <Post
               key={post._id}
               post={post}
-              currentUserId={user?.user?.id}
+              currentUserId={user?.id}
               showButtons={true}
               onPostCreated={fetchPosts}
               />

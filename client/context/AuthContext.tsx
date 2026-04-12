@@ -21,29 +21,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<UserType | null>(null)
     const router = useRouter()
 
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token")
-        if (storedToken) {
-            try {
-                const payload = JSON.parse(atob(storedToken.split(".")[1]))
-                const isExpired = payload.exp * 1000 < Date.now()
+    const [loading, setLoading] = useState(true)
 
-                if (isExpired) {
-                    localStorage.removeItem("token")
-                    setToken(null)
-                    setUser(null)
-                } else {
-                    setToken(storedToken)
-                    setUser(payload) 
-                }
+useEffect(() => {
+    const storedToken = localStorage.getItem("token")
 
-            } catch (error) {
+    if (storedToken) {
+        try {
+            const payload = JSON.parse(atob(storedToken.split(".")[1]))
+            const isExpired = payload.exp * 1000 < Date.now()
+
+            if (isExpired) {
                 localStorage.removeItem("token")
                 setToken(null)
                 setUser(null)
+            } else {
+                setToken(storedToken)
+                setUser(payload.user)
             }
+        } catch (error) {
+            localStorage.removeItem("token")
+            setToken(null)
+            setUser(null)
         }
-    }, [])
+    }
+
+    setLoading(false)
+}, [])
+
 
     const register = (token: string) => {
         localStorage.setItem("token", token)
@@ -68,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{token, user, register, login, logout}} >
+        <AuthContext.Provider value={{token, user,loading, register, login, logout}} >
             {children}
         </AuthContext.Provider>
     )

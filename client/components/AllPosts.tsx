@@ -34,7 +34,7 @@ const AllPosts = () => {
                 <Post
                     key={post._id}
                     post={post}
-                    currentUserId={user?.user?.id}
+                    currentUserId={user?.id}
                     showButtons={false}
                 />
                 ))}
