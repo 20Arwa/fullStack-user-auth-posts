@@ -48,7 +48,7 @@ const AllPosts = () => {
         fetchPosts()
     }, [])
     return (
-    <div className="flex items-center justify-center my-20">
+    <div className="flex items-center justify-center my-20 mx-10">
         {posts.length === 0 ? (
             <p className="text-2xl mt-10">No Posts</p>
             ) : (
