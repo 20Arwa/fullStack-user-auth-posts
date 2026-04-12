@@ -17,7 +17,7 @@ import {
 
 type PostLikesTypes = {
     postId: string,
-    likes: [string],
+    likes: string[],
     currentUserId?: string,
     postUserId: string
 }

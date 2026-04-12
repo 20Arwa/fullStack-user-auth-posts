@@ -5,34 +5,9 @@ import toast from "react-hot-toast";
 import Post from "@/components/Post";
 import { useAuth } from "@/context/AuthContext";
 
-type userInfoTypes = {
-    user_id: string, 
-    user_name: string,
-    email: string
-}
-
 const AllPosts = () => {
-    const [userInfo, setUserInfo] = useState<userInfoTypes | null>(null)
     const [posts, setPosts] = useState([])
-    const {token} = useAuth()
-
-    // Get User's Info
-    useEffect(() => {
-        if (!token) {
-            setUserInfo(null)
-            return
-        }
-        const getUserInfo = async () => {
-            try {
-                const res = await api.get("users/me")
-                setUserInfo(res.data.user)
-            } catch(err: any) {
-                toast.error(err.response?.data?.message)
-            }
-        }
-        
-        getUserInfo()
-    }, [token])
+    const {user} = useAuth()
 
     // Get All Posts
     useEffect(() => {
@@ -47,6 +22,9 @@ const AllPosts = () => {
         }
         fetchPosts()
     }, [])
+
+    console.log(user,"ldkfjl")
+
     return (
     <div className="flex items-center justify-center my-20 mx-10">
         {posts.length === 0 ? (
@@ -57,7 +35,7 @@ const AllPosts = () => {
                 <Post
                     key={post._id}
                     post={post}
-                    currentUserId={userInfo?.user_id}
+                    currentUserId={user?.user.id}
                     showButtons={false}
                 />
                 ))}

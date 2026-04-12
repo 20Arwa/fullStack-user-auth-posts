@@ -1,45 +1,25 @@
 "use client"
 import { useState, useEffect } from "react"
 import api from "@/lib/api"
+import { useAuth } from "@/context/AuthContext"
 import { CircleUserRound, Mail } from "lucide-react"
 import toast from "react-hot-toast"
 import Post from "@/components/Post"
 import PostForm from "@/components/PostForm"
 
-type userInfoTypes = {
-  user_id: string, 
-  user_name: string,
-  email: string
-}
-
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState<userInfoTypes | null>(null)
   const [posts, setPosts] = useState([])
-
-  // Get User's Info
-  useEffect(() => {
-    const getUserInfo = async () => {
-
-      try {
-        const res = await api.get("users/me")
-        setUserInfo(res.data.user)
-      } catch(err: any) {
-        toast.error(err.response?.data?.message)
-      }
-
-    }
-    getUserInfo()
-  }, [])
+  const {user} = useAuth()
   
   // Get User's Posts
   useEffect(() => {
-    if (!userInfo?.user_id) return
+    if (!user) return
     fetchPosts()
-  }, [userInfo?.user_id])
+  }, [user])
   
   const fetchPosts = async () => {
     try {
-      const res = await api.get(`/posts/${userInfo?.user_id}`)      
+      const res = await api.get(`/posts/${user.user.id}`)      
       setPosts(res.data.posts)
     } catch(err: any) {
       toast.error(err?.response?.data?.message)
@@ -51,10 +31,10 @@ const Profile = () => {
       <div className="flex items-center">
         <CircleUserRound size={50}></CircleUserRound>
         <div className="ms-1">
-          <h1 className="text-xl">{userInfo?.user_name}</h1>
+          <h1 className="text-xl">{user.user.user_name}</h1>
           <div className="flex items-center gap-x-0.5">
             <Mail size={20}></Mail>
-            <p>{userInfo?.email}</p>
+            <p>{user.user.email}</p>
           </div>
         </div>
       </div>
@@ -68,7 +48,7 @@ const Profile = () => {
               <Post
               key={post._id}
               post={post}
-              currentUserId={userInfo?.user_id}
+              currentUserId={user.user.id}
               showButtons={true}
               onPostCreated={fetchPosts}
               />
