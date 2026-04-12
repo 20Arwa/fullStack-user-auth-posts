@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const AllPosts = () => {
     const [posts, setPosts] = useState([])
-    const {token, user} = useAuth() 
+    const {user} = useAuth() 
 
     // Get All Posts
     useEffect(() => {

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 
 
 const Profile = () => {
-  const [posts, setPosts] = useState([])
+const [posts, setPosts] = useState([])
   const { user, loading } = useAuth()
   const router = useRouter()
 
@@ -20,20 +20,27 @@ const Profile = () => {
     }
   }, [loading, user])
 
-  if (loading) return <p>Loading...</p>
-  if (!user) return null
-
-  
   const fetchPosts = async () => {
-    if (!user) return 
+    if (!user) return
 
     try {
-      const res = await api.get(`/posts/${user.id}`)
+      const res = await api.get(`/posts/${user.id}`) 
       setPosts(res.data.posts)
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message)
+    } catch (err:any) {
+      toast.error(err.response?.data?.message)
+
     }
   }
+
+  useEffect(() => {
+    if (!loading && user) {
+      fetchPosts()
+    }
+  }, [user, loading])
+
+  if (loading) return <p>Loading...</p>
+
+  if (!user) return <p>Redirecting...</p>
   
   return (
     <div className="container bg-white mx-auto flex flex-col items-center my-10 p-10 rounded-md">

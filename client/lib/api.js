@@ -23,7 +23,6 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         const token = localStorage.getItem("token")
-        console.log(error.response)
 
         if (
         token &&
