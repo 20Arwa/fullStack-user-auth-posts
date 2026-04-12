@@ -29,7 +29,15 @@ const PostLikes = (props: PostLikesTypes) => {
         const [numLikes, setnumLikes] = useState<number>(props.likes.length)
 
         // Check If Post Alredy Liked
-        useEffect(() => {props.likes.includes(props.currentUserId || "") ? setLiked(true) : setLiked(false)}, [props.currentUserId, props.likes])
+        useEffect(() => {
+            if (!token || !props.currentUserId) {
+                setLiked(false)
+                return
+            }
+
+            setLiked(props.likes.includes(props.currentUserId))
+        }, [token, props.currentUserId, props.likes])
+
         // Handle Like
         const handleLike = async() => {
             if (!token) {
