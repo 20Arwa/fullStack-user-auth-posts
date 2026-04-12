@@ -7,7 +7,8 @@ import { useAuth } from "@/context/AuthContext";
 
 const AllPosts = () => {
     const [posts, setPosts] = useState([])
-    const { user } = useAuth() || {}
+    const auth = useAuth()
+    const user = auth?.user
 
     // Get All Posts
     useEffect(() => {
@@ -34,7 +35,7 @@ const AllPosts = () => {
                 <Post
                     key={post._id}
                     post={post}
-                    currentUserId={user?.user.id}
+                    currentUserId={user?.user?.id}
                     showButtons={false}
                 />
                 ))}

@@ -9,17 +9,20 @@ import PostForm from "@/components/PostForm"
 
 const Profile = () => {
   const [posts, setPosts] = useState([])
-  const { user } = useAuth() || {}
+  const auth = useAuth()
+  const user = auth?.user
   
   // Get User's Posts
   useEffect(() => {
-    if (!user) return
+    if (!user?.user?.id) return
     fetchPosts()
   }, [user])
   
   const fetchPosts = async () => {
+    if (!user?.user?.id) return
+
     try {
-      const res = await api.get(`/posts/${user?.user.id}`)      
+      const res = await api.get(`/posts/${user.user.id}`)      
       setPosts(res.data.posts)
     } catch(err: any) {
       toast.error(err?.response?.data?.message)
