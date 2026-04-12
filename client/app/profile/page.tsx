@@ -19,7 +19,7 @@ const Profile = () => {
   
   const fetchPosts = async () => {
     try {
-      const res = await api.get(`/posts/${user.user.id}`)      
+      const res = await api.get(`/posts/${user?.user.id}`)      
       setPosts(res.data.posts)
     } catch(err: any) {
       toast.error(err?.response?.data?.message)
@@ -31,10 +31,10 @@ const Profile = () => {
       <div className="flex items-center">
         <CircleUserRound size={50}></CircleUserRound>
         <div className="ms-1">
-          <h1 className="text-xl">{user.user.user_name}</h1>
+          <h1 className="text-xl">{user?.user.user_name}</h1>
           <div className="flex items-center gap-x-0.5">
             <Mail size={20}></Mail>
-            <p>{user.user.email}</p>
+            <p>{user?.user.email}</p>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@ const Profile = () => {
               <Post
               key={post._id}
               post={post}
-              currentUserId={user.user.id}
+              currentUserId={user?.user?.id}
               showButtons={true}
               onPostCreated={fetchPosts}
               />

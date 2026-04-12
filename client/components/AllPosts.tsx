@@ -23,7 +23,6 @@ const AllPosts = () => {
         fetchPosts()
     }, [])
 
-    console.log(user,"ldkfjl")
 
     return (
     <div className="flex items-center justify-center my-20 mx-10">
