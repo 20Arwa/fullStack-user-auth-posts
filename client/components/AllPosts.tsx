@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const AllPosts = () => {
     const [posts, setPosts] = useState([])
-    const {user} = useAuth() 
+    const {token, user} = useAuth() 
 
     // Get All Posts
     useEffect(() => {
@@ -22,7 +22,6 @@ const AllPosts = () => {
         }
         fetchPosts()
     }, [])
-
 
     return (
     <div className="flex items-center justify-center my-20 mx-10">

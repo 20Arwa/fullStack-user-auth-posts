@@ -24,16 +24,17 @@ const Profile = () => {
   if (!user) return null
 
   
-  
   const fetchPosts = async () => {
+    if (!user) return 
+
     try {
-      const res = await api.get(`/posts/${user.id}`)      
+      const res = await api.get(`/posts/${user.id}`)
       setPosts(res.data.posts)
-    } catch(err: any) {
+    } catch (err: any) {
       toast.error(err?.response?.data?.message)
     }
   }
-
+  
   return (
     <div className="container bg-white mx-auto flex flex-col items-center my-10 p-10 rounded-md">
       <div className="flex items-center">

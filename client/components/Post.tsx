@@ -1,4 +1,4 @@
-import { CircleUserRound, Heart } from "lucide-react"
+import { CircleUserRound } from "lucide-react"
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from "./ui/card"
 import PostForm from "@/components/PostForm"
 import DeletePost from "@/components/DeletePost"

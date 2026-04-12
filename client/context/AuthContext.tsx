@@ -54,14 +54,14 @@ useEffect(() => {
         localStorage.setItem("token", token)
         const payload = JSON.parse(atob(token.split(".")[1]))
         setToken(token)
-        setUser(payload)
+        setUser(payload.user)
     }
 
     const login = (token: string) => {
         localStorage.setItem("token", token)
         const payload = JSON.parse(atob(token.split(".")[1]))
         setToken(token)
-        setUser(payload)
+        setUser(payload.user)
     }
     
 

@@ -9,15 +9,20 @@ const errorTitles = {
 }
 
 const errorHandler = (err, req, res, next) => {
-    const statusCode = err.statusCode || ERRORS.SERVER_ERROR
+    const statusCode =
+        err.statusCode ||
+        res.statusCode !== 200
+            ? res.statusCode
+            : ERRORS.SERVER_ERROR
 
     res.status(statusCode).json({
         title: errorTitles[statusCode] || "Server Error",
         message: err.message,
         ...(statusCode === ERRORS.UNAUTHORIZED && {
-            type: err.type || "UNKNOWN_ERROR"
+            type: err.type || "AUTH_ERROR"
         }),
-        stackTrace: err.stack,
+        stackTrace:
+            process.env.NODE_ENV === "production" ? null : err.stack,
     })
 }
 

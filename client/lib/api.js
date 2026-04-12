@@ -19,16 +19,23 @@ api.interceptors.request.use((config) => {
 })
 
 // If Token Expires > Log Out
-api.interceptors.response.use((response) => response, 
+api.interceptors.response.use(
+    (response) => response,
     (error) => {
+        const token = localStorage.getItem("token")
+        console.log(error.response)
+
         if (
-            error.response?.status === 500 &&
-            error.response?.data?.message === "Token expired"
+        token &&
+        error.response?.status === 401 &&
+        error.response?.data?.message === "Token expired"
         ) {
-            localStorage.removeItem("token")
-            window.location.href = "/login"
+        localStorage.removeItem("token")
+        window.location.href = "/login"
         }
+
         return Promise.reject(error)
-})
+    }
+)
 
 export default api
