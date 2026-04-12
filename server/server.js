@@ -18,6 +18,10 @@ app.use("/api/users", userRouter)
 app.use("/api/", postRouter)
 app.use(errorHandler)
 
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
+
 const port = process.env.PORT || 8000
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
