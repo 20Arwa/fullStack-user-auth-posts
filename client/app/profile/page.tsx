@@ -40,10 +40,10 @@ const Profile = () => {
       <div className="flex items-center">
         <CircleUserRound size={50}></CircleUserRound>
         <div className="ms-1">
-          <h1 className="text-xl">{user?.user.user_name}</h1>
+          <h1 className="text-xl">{user?.user?.user_name}</h1>
           <div className="flex items-center gap-x-0.5">
             <Mail size={20}></Mail>
-            <p>{user?.user.email}</p>
+            <p>{user?.user?.email}</p>
           </div>
         </div>
       </div>
