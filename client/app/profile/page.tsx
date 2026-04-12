@@ -6,21 +6,27 @@ import { CircleUserRound, Mail } from "lucide-react"
 import toast from "react-hot-toast"
 import Post from "@/components/Post"
 import PostForm from "@/components/PostForm"
+import { useRouter } from "next/navigation"
 
 const Profile = () => {
   const [posts, setPosts] = useState([])
-  const auth = useAuth()
-  const user = auth?.user
-  
+  const { user } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user === null) {
+      router.push("/login")
+    }
+  }, [user])
+
   // Get User's Posts
   useEffect(() => {
     if (!user?.user?.id) return
     fetchPosts()
   }, [user])
   
+  
   const fetchPosts = async () => {
-    if (!user?.user?.id) return
-
     try {
       const res = await api.get(`/posts/${user.user.id}`)      
       setPosts(res.data.posts)
