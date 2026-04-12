@@ -8,7 +8,13 @@ type UserType = {
     id: string
 }
 
-const AuthContext = createContext<any>(null)
+const AuthContext = createContext<any>({
+    token: null,
+    user: null,
+    register: () => {},
+    login: () => {},
+    logout: () => {}
+})
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [token, setToken] = useState<string | null>(null)
