@@ -1,4 +1,4 @@
-# 📝 User Posts App
+# User Posts App
 
 A simple full-stack application that allows users to register, log in, and interact with posts by creating, updating, deleting, and liking them.
 
@@ -8,7 +8,7 @@ This project was built for learning and practicing modern full-stack development
 
 ## 🌐 Live Demo
 
-👉 https://fullStack-user-auth-posts.vercel.app/
+👉 https://full-stack-user-auth-posts.vercel.app/
 
 ---
 
@@ -59,13 +59,24 @@ cd fullStack-user-auth-posts
 npm install
 ```
 
-### 3. Create `.env`
+### 3. Create Environment Variables
+
+Create the following environment files:
+
+### 🔹 Server (`/server/.env`)
 
 ```env
-MONGO_URI=your_mongodb_connection
-JWT_SECRET=your_jwt_secret
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
+MONGODB_URL=your_mongodb_connection_string
+PORT=5000
+ACCESS_TOKEN_SECRET=your_access_token_secret
 ```
+
+### 🔹 Client (`/client/.env.local`)
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
 
 ### 4. Run the development server
 
