@@ -9,7 +9,7 @@ import PostForm from "@/components/PostForm"
 
 const Profile = () => {
   const [posts, setPosts] = useState([])
-  const {user} = useAuth()
+  const { user } = useAuth() || {}
   
   // Get User's Posts
   useEffect(() => {
