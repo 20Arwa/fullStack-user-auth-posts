@@ -4,23 +4,10 @@ import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Post from "@/components/Post";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
 
 const AllPosts = () => {
     const [posts, setPosts] = useState([])
     const {user} = useAuth() 
-
-    const router = useRouter()
-
-  // 👇 هنا بالضبط
-  if (user === undefined) {
-    return <p>Loading...</p>
-  }
-
-  if (user === null) {
-    router.push("/login")
-    return null
-  }
 
     // Get All Posts
     useEffect(() => {

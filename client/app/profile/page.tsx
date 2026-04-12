@@ -13,11 +13,14 @@ const Profile = () => {
   const { user } = useAuth()
   const router = useRouter()
 
-  useEffect(() => {
-    if (user === null) {
-      router.push("/login")
-    }
-  }, [user])
+  if (user === undefined) {
+    return <p>Loading...</p>
+  }
+
+  if (user === null) {
+    router.push("/login")
+    return null
+  }
 
   // Get User's Posts
   useEffect(() => {
