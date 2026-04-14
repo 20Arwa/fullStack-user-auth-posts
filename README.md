@@ -19,7 +19,6 @@ This project was built for learning and practicing modern full-stack development
 * Create, update, and delete posts
 * Like / Unlike posts
 * View user-specific data
-* Responsive UI
 
 ---
 
